@@ -1,0 +1,74 @@
+﻿@page "/pedidos"
+@using Proyecto.Shared.Modelo;
+@inject HttpClient http
+@inject NavigationManager navegar
+
+
+<h3>Lista de pedidos</h3>
+
+<button class="btn btn-primary" @onclick="Agregar"> <span class="oi oi-plus"></span> Nuevo pedido </button>
+
+@if (losPedidos == null)
+{
+    <h1>Cargando datos...</h1>
+}
+else if (losPedidos.Count == 0)
+{
+    <h1>No existen pedidos registradas</h1>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var elPedido in losPedidos)
+            {
+                <tr>
+                    <td>@elPedido.Nombre</td>
+                    <td>@elPedido.Teléfono</td>
+                    <td>@elPedido.Fecha</td>
+                    <td>
+                        <button class="btn-sm" @onclick="()=>  Modificar(elPedido.Id)">Modificar</button>
+                        <button class="btn-sm" @onclick="()=>  Eliminar(elPedido.Id)">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Pedido> losPedidos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        losPedidos = await http.GetFromJsonAsync<List<Pedido>>("api/pedidos");
+    }
+
+    private void Agregar()
+    {
+        navegar.NavigateTo("/pedidos/nuevos");
+    }
+
+
+    private void Modificar(int id)
+    {
+        navegar.NavigateTo($"/personas/editar/{id}");
+
+    }
+
+    private async void Eliminar(int id)
+    {
+        await http.DeleteAsync($"api/pedidos/{id}");
+        losPedidos = await http.GetFromJsonAsync<List<Pedido>>("api/pedidos");
+        StateHasChanged();
+    }
+
+}
