@@ -35,8 +35,8 @@ else
                     <td>@elPedido.Teléfono</td>
                     <td>@elPedido.Fecha</td>
                     <td>
-                        <button class="btn-sm" @onclick="()=>  Modificar(elPedido.Id)">Modificar</button>
-                        <button class="btn-sm" @onclick="()=>  Eliminar(elPedido.Id)">Eliminar</button>
+                        <button class="btn-secondary" @onclick="()=>  Modificar(elPedido.Id)"> <span class=" oi oi-pencil"></span> </button>
+                        <button class="btn-danger mx-3" @onclick="()=>  Eliminar(elPedido.Id)"> <span class="oi oi-trash"> </span> </button>
                     </td>
                 </tr>
             }
@@ -70,5 +70,6 @@ else
         losPedidos = await http.GetFromJsonAsync<List<Pedido>>("api/pedidos");
         StateHasChanged();
     }
+
 
 }

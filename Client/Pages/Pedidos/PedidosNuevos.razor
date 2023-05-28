@@ -24,6 +24,7 @@
         <ValidationMessage For="(()=> elPedido.Fecha)" />
     </div>
     <button type="submit" class="btn btn-primary"> Guardar </button>
+    <button type="button" class="btn btn-danger" @onclick="Cancelar">Cancelar</button>
 
 </EditForm>
 
@@ -36,5 +37,9 @@
         navegar.NavigateTo("/pedidos");
     }
 
+    private void Cancelar()
+    {
+        navegar.NavigateTo("/pedidos");
+    }
 
 }

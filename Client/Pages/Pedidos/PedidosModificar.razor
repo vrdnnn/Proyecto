@@ -14,7 +14,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="txtTeléfono" class="form-label"> Telefono</label>
+        <label for="txtTeléfono" class="form-label"> Teléfono</label>
         <InputText id="txtTelefono" class="form-control" @bind-Value="elPedido.Teléfono" />
         <ValidationMessage For="(()=> elPedido.Teléfono)" />
     </div>
@@ -25,6 +25,8 @@
         <ValidationMessage For="(()=> elPedido.Fecha)" />
     </div>
     <button type="submit" class="btn btn-primary"> Guardar </button>
+
+    <button type="button" class="btn btn-danger" @onclick="Cancelar">Cancelar</button>
 
 </EditForm>
 
@@ -43,6 +45,11 @@
     {
 
         await http.PutAsJsonAsync($"api/pedidos/{Id}", elPedido);
+        navegar.NavigateTo("/pedidos");
+    }
+
+    private void Cancelar()
+    {
         navegar.NavigateTo("/pedidos");
     }
 
